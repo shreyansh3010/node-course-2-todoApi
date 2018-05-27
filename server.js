@@ -30,6 +30,19 @@ app.get('/todos', (req,res)=>{
     });
 });
 
+app.delete('/todos/:id',(req,res)=>{
+    var id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        res.status(404).send();
+    }
+    
+    Todo.findOneAndRemove(id).then((result)=>{
+        res.send({result});
+    },(e)=>{
+        res.status(400).send(e);
+    });
+
+});
 
 app.get('/todos/:id',(req,res)=>{
     var id = req.params.id;
